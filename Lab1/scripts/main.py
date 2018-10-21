@@ -40,6 +40,7 @@ def ZeroCR(waveData, frameSize):
         l = loop + frameSize
         if l > wave_len:
             l = wave_len
+            frameSize = l - loop
         for j in range(loop, l):
             result = result + (waveData[j]*waveData[j-1] < 0)
         f.append(result)
@@ -81,6 +82,7 @@ def Energy(waveData, frameSize):
         l = loop + frameSize
         if l > wave_len:
             l = wave_len
+            frameSize = l - loop
         for j in range(loop, l):
             # if i == 162: print(str(j) + ' ' + str(waveData[j]) + ' ' + str(pow(waveData[j], 2)))
             result = result + pow(waveData[j], 2) * pow(1.0 / (2 * frameSize), 2)

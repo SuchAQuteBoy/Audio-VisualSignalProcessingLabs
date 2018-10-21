@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.css" integrity="sha384-BTL0nVi8DnMrNdMQZG1Ww6yasK9ZGnUxL1ZWukXQ7fygA1py52yPp9W4wrR00VML" crossorigin="anonymous">
+        <style>
+/*--------------------------------------------------------------------------------------------- * Copyright (c) Microsoft Corporation. All rights reserved. * Licensed under the MIT License. See License.txt in the project root for license information. *--------------------------------------------------------------------------------------------*/ body { font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback"; font-size: 14px; padding: 0 26px; line-height: 22px; word-wrap: break-word; } #code-csp-warning { position: fixed; top: 0; right: 0; color: white; margin: 16px; text-align: center; font-size: 12px; font-family: sans-serif; background-color:#444444; cursor: pointer; padding: 6px; box-shadow: 1px 1px 1px rgba(0,0,0,.25); } #code-csp-warning:hover { text-decoration: none; background-color:#007acc; box-shadow: 2px 2px 2px rgba(0,0,0,.25); } body.scrollBeyondLastLine { margin-bottom: calc(100vh - 22px); } body.showEditorSelection .code-line { position: relative; } body.showEditorSelection .code-active-line:before, body.showEditorSelection .code-line:hover:before { content: ""; display: block; position: absolute; top: 0; left: -12px; height: 100%; } body.showEditorSelection li.code-active-line:before, body.showEditorSelection li.code-line:hover:before { left: -30px; } .vscode-light.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(0, 0, 0, 0.15); } .vscode-light.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(0, 0, 0, 0.40); } .vscode-light.showEditorSelection .code-line .code-line:hover:before { border-left: none; } .vscode-dark.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(255, 255, 255, 0.4); } .vscode-dark.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(255, 255, 255, 0.60); } .vscode-dark.showEditorSelection .code-line .code-line:hover:before { border-left: none; } .vscode-high-contrast.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(255, 160, 0, 0.7); } .vscode-high-contrast.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(255, 160, 0, 1); } .vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before { border-left: none; } img { max-width: 100%; max-height: 100%; } a { text-decoration: none; } a:hover { text-decoration: underline; } a:focus, input:focus, select:focus, textarea:focus { outline: 1px solid -webkit-focus-ring-color; outline-offset: -1px; } hr { border: 0; height: 2px; border-bottom: 2px solid; } h1 { padding-bottom: 0.3em; line-height: 1.2; border-bottom-width: 1px; border-bottom-style: solid; } h1, h2, h3 { font-weight: normal; } h1 code, h2 code, h3 code, h4 code, h5 code, h6 code { font-size: inherit; line-height: auto; } table { border-collapse: collapse; } table > thead > tr > th { text-align: left; border-bottom: 1px solid; } table > thead > tr > th, table > thead > tr > td, table > tbody > tr > th, table > tbody > tr > td { padding: 5px 10px; } table > tbody > tr + tr > td { border-top: 1px solid; } blockquote { margin: 0 7px 0 5px; padding: 0 16px 0 10px; border-left-width: 5px; border-left-style: solid; } code { font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback"; font-size: 14px; line-height: 19px; } body.wordWrap pre { white-space: pre-wrap; } .mac code { font-size: 12px; line-height: 18px; } pre:not(.hljs), pre.hljs code > div { padding: 16px; border-radius: 3px; overflow: auto; } /** Theming */ pre code { color: var(--vscode-editor-foreground); } .vscode-light pre:not(.hljs), .vscode-light code > div { background-color: rgba(220, 220, 220, 0.4); } .vscode-dark pre:not(.hljs), .vscode-dark code > div { background-color: rgba(10, 10, 10, 0.4); } .vscode-high-contrast pre:not(.hljs), .vscode-high-contrast code > div { background-color: rgb(0, 0, 0); } .vscode-high-contrast h1 { border-color: rgb(0, 0, 0); } .vscode-light table > thead > tr > th { border-color: rgba(0, 0, 0, 0.69); } .vscode-dark table > thead > tr > th { border-color: rgba(255, 255, 255, 0.69); } .vscode-light h1, .vscode-light hr, .vscode-light table > tbody > tr + tr > td { border-color: rgba(0, 0, 0, 0.18); } .vscode-dark h1, .vscode-dark hr, .vscode-dark table > tbody > tr + tr > td { border-color: rgba(255, 255, 255, 0.18); } 
+</style>
+<style>
+/* Tomorrow Theme */ /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */ /* Original theme - https://github.com/chriskempson/tomorrow-theme */ /* Tomorrow Comment */ .hljs-comment, .hljs-quote { color: #8e908c; } /* Tomorrow Red */ .hljs-variable, .hljs-template-variable, .hljs-tag, .hljs-name, .hljs-selector-id, .hljs-selector-class, .hljs-regexp, .hljs-deletion { color: #c82829; } /* Tomorrow Orange */ .hljs-number, .hljs-built_in, .hljs-builtin-name, .hljs-literal, .hljs-type, .hljs-params, .hljs-meta, .hljs-link { color: #f5871f; } /* Tomorrow Yellow */ .hljs-attribute { color: #eab700; } /* Tomorrow Green */ .hljs-string, .hljs-symbol, .hljs-bullet, .hljs-addition { color: #718c00; } /* Tomorrow Blue */ .hljs-title, .hljs-section { color: #4271ae; } /* Tomorrow Purple */ .hljs-keyword, .hljs-selector-tag { color: #8959a8; } .hljs { display: block; overflow-x: auto; color: #4d4d4c; padding: 0.5em; } .hljs-emphasis { font-style: italic; } .hljs-strong { font-weight: bold; }
+</style>
+<style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+<link rel="stylesheet" href="https://raw.githubusercontent.com/SuchAQuteBoy/MachineLearningLabs/master/github_markdown_css/github-css.css">
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', 'Microsoft Yahei', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <center>
+<div>
+<img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/HIT1.png" height="80"/>
+</div>
+<div>
+<font size="10">实验报告</font>
+</div>
+<div>
+<table border="0">
+<tr>
+<td align="left">题目</td>
+<td align="left">语音信号端点检测</td>
+</tr>
+<tr>
+<td align="left">专业</td>
+<td align="left">计算机科学与技术</td>
+</tr>
+<tr>
+<td align="left">学号</td>
+<td align="left">1160300329</td>
+</tr>
+<tr>
+<td align="left">班级</td>
+<td align="left">1603107</td>
+</tr>
+<tr>
+<td align="left">学生</td>
+<td align="left">黄海</td>
+</tr>
+<tr>
+<td align="left">指导教师</td>
+<td align="left">郑铁然</td>
+</tr>
+<tr>
+<td align="left">实验地点</td>
+<td align="left">G709</td>
+</tr>
+<tr>
+<td align="left">实验日期</td>
+<td align="left">10.15</td>
+</tr>
+</table>
+</div>
+<div>
+<font size="5">计算机科学与技术学院</font>
+</div>
+</center>
+<div STYLE="page-break-after: always;"></div>
+<center>
+<h1 id="一语音编辑和处理工具的使用">一、语音编辑和处理工具的使用</h1>
+</center>
+<h2 id="11-语音文件的时域波形截图">1.1 语音文件的时域波形截图</h2>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab1/Screenshot_1.png" alt=""></p>
+<h2 id="12-语音文件的语谱图截图">1.2 语音文件的语谱图截图</h2>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab1/Screenshot_2.png" alt=""></p>
+<h2 id="13-第一个音节的时域波形截图">1.3 第一个音节的时域波形截图</h2>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab1/Screenshot_3.png" alt=""></p>
+<h2 id="14-语料格式">1.4 语料格式</h2>
+<ul>
+<li>采样频率 = 16000Hz</li>
+<li>量化比特数 = 16位</li>
+<li>声道个数 = 1(单声道)</li>
+</ul>
+<center>
+<h1 id="二能量和过零率特征提取">二、能量和过零率特征提取</h1>
+</center>
+<p>以下所有均使用python开发</p>
+<ul>
+<li>python 3.7.0 32-bit</li>
+<li>macOS</li>
+</ul>
+<h2 id="21-给出特征提取算法标明所采用的开发工具">2.1 给出特征提取算法，标明所采用的开发工具</h2>
+<p>对于过零率，我们由以下公式给出：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>z</mi><mi>c</mi><mi>r</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></mfrac><munderover><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>T</mi><mo>−</mo><mn>1</mn></mrow></munderover><mi mathvariant="double-struck">I</mi><mo>{</mo><msub><mi>s</mi><mi>t</mi></msub><msub><mi>s</mi><mi>t</mi></msub><mo>−</mo><mn>1</mn><mo>&lt;</mo><mn>0</mn><mo>}</mo></mrow><annotation encoding="application/x-tex">zcr = \frac{1}{N-1}\sum_{t=1}^{T-1}\mathbb{I}\{s_t s_t-1 &lt; 0\}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="mord mathit">c</span><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.0954490000000003em;vertical-align:-1.267113em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283360000000004em;"><span style="top:-1.882887em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">t</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.300005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.13889em;">T</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.267113em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathbb">I</span></span><span class="mopen">{</span><span class="mord"><span class="mord mathit">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathit">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68354em;vertical-align:-0.0391em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mclose">}</span></span></span></span></span></p>
+<p>其中</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="double-struck">I</mi><mo>{</mo><mi>A</mi><mo>}</mo><mo>=</mo><mrow><mo fence="true">{</mo><mtable><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mn>1</mn><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>i</mi><mi>f</mi><mtext> </mtext><mi>A</mi><mtext> </mtext><mi>i</mi><mi>s</mi><mtext> </mtext><mi>t</mi><mi>u</mi><mi>r</mi><mi>e</mi><mi mathvariant="normal">.</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mn>0</mn><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>i</mi><mi>f</mi><mtext> </mtext><mi>A</mi><mtext> </mtext><mi>i</mi><mi>s</mi><mtext> </mtext><mi>f</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>e</mi><mi mathvariant="normal">.</mi></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">\mathbb{I}\{A\} = 
+\left\{
+    \begin{array}{ll}
+        1, &amp;if\ A\ is\ ture.\\
+        0, &amp;if\ A\ is\ false.
+    \end{array}
+\right.
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathbb">I</span></span><span class="mopen">{</span><span class="mord mathit">A</span><span class="mclose">}</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.40003em;vertical-align:-0.95003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">{</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mpunct">,</span></span></span><span style="top:-2.4099999999999997em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span><span class="mpunct">,</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9500000000000004em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathit">i</span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mspace"> </span><span class="mord mathit">A</span><span class="mspace"> </span><span class="mord mathit">i</span><span class="mord mathit">s</span><span class="mspace"> </span><span class="mord mathit">t</span><span class="mord mathit">u</span><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mord mathit">e</span><span class="mord">.</span></span></span><span style="top:-2.4099999999999997em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathit">i</span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mspace"> </span><span class="mord mathit">A</span><span class="mspace"> </span><span class="mord mathit">i</span><span class="mord mathit">s</span><span class="mspace"> </span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mord mathit">a</span><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit">s</span><span class="mord mathit">e</span><span class="mord">.</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9500000000000004em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi><mo>=</mo><mi>l</mi><mi>e</mi><mi>n</mi><mi>g</mi><mi>t</mi><mi>h</mi><mtext> </mtext><mi>o</mi><mi>f</mi><mtext> </mtext><mi>f</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>e</mi><mtext> </mtext><mi>w</mi><mi>i</mi><mi>n</mi><mi>d</mi><mi>o</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">N = length\ of\ frame\ window
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit">e</span><span class="mord mathit">n</span><span class="mord mathit" style="margin-right:0.03588em;">g</span><span class="mord mathit">t</span><span class="mord mathit">h</span><span class="mspace"> </span><span class="mord mathit">o</span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mspace"> </span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mord mathit">a</span><span class="mord mathit">m</span><span class="mord mathit">e</span><span class="mspace"> </span><span class="mord mathit" style="margin-right:0.02691em;">w</span><span class="mord mathit">i</span><span class="mord mathit">n</span><span class="mord mathit">d</span><span class="mord mathit">o</span><span class="mord mathit" style="margin-right:0.02691em;">w</span></span></span></span></span></p>
+<p>所以给出过零率的检测算法</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ZeroCR</span><span class="hljs-params">(waveData, frameSize)</span>:</span>
+    wave_len = len(waveData)
+    frameNum = math.ceil(wave_len / frameSize)
+    ZRresult = [] <span class="hljs-comment">#最终结果</span>
+    f = []
+    loop = <span class="hljs-number">1</span>
+    result = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(frameNum):
+        l = loop + frameSize
+        <span class="hljs-keyword">if</span> l &gt; wave_len:
+            l = wave_len
+            frameSize = l - loop
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(loop, l): <span class="hljs-comment"># 平移窗口</span>
+            result = result + (waveData[j]*waveData[j<span class="hljs-number">-1</span>] &lt; <span class="hljs-number">0</span>)
+        f.append(result)
+        result = <span class="hljs-number">0</span>
+        loop += frameSize
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(f)):
+        ZRresult.append(f[i] / (frameSize - <span class="hljs-number">1</span>))
+    <span class="hljs-keyword">return</span> ZRresult
+</div></code></pre>
+<p>对于能量，我们由以下公式给出：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>E</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>n</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><msup><mi>x</mi><mn>2</mn></msup><mo>(</mo><mi>n</mi><mo>)</mo><mo>⋅</mo><msup><mi>w</mi><mn>2</mn></msup><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">E=\sum_{n=1}^{N}x^2(n) \cdot w^2(n)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathit" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.0954490000000003em;vertical-align:-1.267113em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283360000000002em;"><span style="top:-1.882887em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">n</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.10903em;">N</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.267113em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">n</span><span class="mclose">)</span></span></span></span></span></p>
+<p>其中</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi><mo>(</mo><mi>n</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>N</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">w(n)= \frac{1}{2N}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathit" style="margin-right:0.02691em;">w</span><span class="mopen">(</span><span class="mord mathit">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.00744em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathit" style="margin-right:0.10903em;">N</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Energy</span><span class="hljs-params">(waveData, frameSize)</span>:</span>
+    wave_len = len(waveData)
+    frameNum = math.ceil(wave_len / frameSize)
+    ENresult = []
+    loop = <span class="hljs-number">0</span>
+    result = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(frameNum):
+        l = loop + frameSize
+        <span class="hljs-keyword">if</span> l &gt; wave_len:
+            l = wave_len
+            frameSize = l - loop
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(loop, l):
+            result = result + pow(waveData[j], <span class="hljs-number">2</span>) * pow(<span class="hljs-number">1.0</span> / (<span class="hljs-number">2</span> * frameSize), <span class="hljs-number">2</span>)
+        ENresult.append(result)
+        result = <span class="hljs-number">0</span>
+        loop += frameSize
+    <span class="hljs-keyword">return</span> ENresult
+</div></code></pre>
+<center>
+<h1 id="三-端点检测算法">三、 端点检测算法</h1>
+</center>
+<h2 id="31-给出端点检测算法标明所采用的开发工具">3.1 给出端点检测算法，标明所采用的开发工具</h2>
+<p>以下所有均使用python开发</p>
+<ul>
+<li>python 3.7.0 32-bit</li>
+<li>macOS</li>
+</ul>
+<p>对于端点检测，使用了双门限进行判断。</p>
+<p>在这里我使用了过零率和能量来作为门限来进行限制。为每个特征设置高低两个门限，为每一帧设置了三个状态。三个状态分别是Mute，Transition和Speech，进行标注之后筛选开始结束点取样。</p>
+<p>首先我们设置四个门限，在两个特征均小于低门限时设置状态为Mute。当其中任何一个超过了低门限时设置状态为Transition。当两个状态均超过高门限时设置为Speech。</p>
+<p>当从Speech状态跌回Transition时检查是否持续。如果没有就将Transition设Mute。如果Speech持续时间不超过5帧，判Speech为噪声，设为Mute。</p>
+<p>这样可以得出一个包含没帧状态的数组，然后进行计算得到开始结束的点，取出字节进行写文件。</p>
+<p>状态判断分为两个阶段，一是直接判断。从数据直接进行判断获得状态而不进行逻辑筛查。二是逻辑筛查，判断是否是短时噪声以及是否是静音。通过两次判断将数组的所有数据洗成只有Mute和Speech的数据，方便设置起始点和终止点。</p>
+<p>一次判断</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getState</span><span class="hljs-params">(zerodata, engdata, zero_low, zero_high, eng_low, eng_high)</span>:</span>
+    state = STATE.Mute
+    <span class="hljs-keyword">if</span>(zerodata &lt; zero_low <span class="hljs-keyword">and</span> engdata &lt; eng_low):
+        state = STATE.Mute
+    <span class="hljs-keyword">if</span>(zerodata &gt;= zero_low <span class="hljs-keyword">or</span> engdata &gt;= eng_low):
+        state = STATE.Transition
+    <span class="hljs-keyword">if</span>(zerodata &gt;= zero_high <span class="hljs-keyword">and</span> engdata &gt;= eng_high):
+        state = STATE.Speech
+    <span class="hljs-keyword">if</span>(state == STATE.Transition):
+        <span class="hljs-keyword">if</span>(zerodata &gt;= zero_high <span class="hljs-keyword">or</span> engdata &gt;= eng_high):
+            state == STATE.Speech
+        <span class="hljs-keyword">elif</span>(zerodata &lt; zero_low <span class="hljs-keyword">and</span> engdata &lt; eng_low):
+            state == STATE.Mute
+    <span class="hljs-keyword">return</span> state
+</div></code></pre>
+<p>二次判断</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(zerodata)):
+    state = getState(float(zerodata[i]), float(engdata[i]), zero_low, zero_high, eng_low, eng_high)
+    <span class="hljs-keyword">if</span>(state == STATE.Speech):
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>):
+            <span class="hljs-keyword">if</span> i + j &gt;= len(zerodata):
+                s = len(zerodata)
+            <span class="hljs-keyword">else</span>:
+                s = i + j
+            state = getState(float(zerodata[s]), float(engdata[s]), zero_low, zero_high, eng_low, eng_high)
+            <span class="hljs-keyword">if</span> state == STATE.Mute:
+                <span class="hljs-keyword">break</span>
+            <span class="hljs-keyword">else</span>:
+                state = STATE.Speech
+    <span class="hljs-keyword">elif</span>(state == STATE.Transition <span class="hljs-keyword">and</span> i &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> result[i - <span class="hljs-number">1</span>] == STATE.Speech):
+        state = STATE.Speech
+    <span class="hljs-keyword">else</span>:
+        state = STATE.Mute
+    <span class="hljs-keyword">print</span> (str(i + <span class="hljs-number">1</span>) + <span class="hljs-string">' '</span> + str(state) + <span class="hljs-string">'\n'</span>)
+    result.append(state)
+</div></code></pre>
+<p>两点筛查</p>
+<pre class="hljs"><code><div>begin = []
+end = []
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(result)):
+    <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> result[i] == STATE.Speech:
+        <span class="hljs-keyword">if</span> result[i - <span class="hljs-number">1</span>] != STATE.Speech:
+             begin.append(i * <span class="hljs-number">256</span>) 
+    <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> result[i] == STATE.Mute:
+        <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> result[i - <span class="hljs-number">1</span>] != STATE.Mute <span class="hljs-keyword">and</span> result[i - <span class="hljs-number">2</span>] == STATE.Speech:
+            end.append(i * <span class="hljs-number">256</span>)
+</div></code></pre>
+<center>
+<h1 id="四-计算检测正确率">四、 计算检测正确率</h1>
+</center>
+<h2 id="41-1wav语料去除静音后的时域波形截图">4.1 “1.wav”语料去除静音后的时域波形截图</h2>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab1/Screenshot_4.png" alt=""></p>
+<h2 id="42-正确率">4.2 正确率</h2>
+<ul>
+<li>正确检出文件的个数：10</li>
+<li>正确率=  100%</li>
+</ul>
+<center>
+<h1 id="五-总结">五、 总结</h1>
+</center>
+<h2 id="51-请总结本次实验的收获">5.1 请总结本次实验的收获</h2>
+<p>本次实验较为全面的了解了使用程序来对语音文件进行处理的全部过程，并且亲手编写算法进行运行。在实验中查询了大量的资料，对于语音处理有了大致的认识。对于双门限的理解更加的深刻。</p>
+<h2 id="52-请给出对本次实验内容的建议">5.2 请给出对本次实验内容的建议</h2>
+<p>希望能够加入更多的实验内容</p>
+
+    </body>
+    </html>

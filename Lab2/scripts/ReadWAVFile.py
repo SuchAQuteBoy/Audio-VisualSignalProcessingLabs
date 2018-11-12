@@ -1,46 +1,14 @@
 # -*- coding: utf-8 -*-
 
-"""
-读取.wav文件的所有数据，获取文件的头部信息和采样点。
-
-所有的数据为内部变量，无法直接访问，请使用相应的函数来进行使用。
-
-需要的包:
-    wave
-    numpy
-    
-所有的类:
-    class rwf(self, filename) -- 主要类，唯一类。读取所有的wav文件数据。
-"""
-
 import wave
-import numpy as np 
+import numpy as np
+import struct
 
-class rwf(object):
-    """
-    rwf 获取wav文件的所有内容。
 
-    所有的数据为内部变量，无法从外部进行调用，请直接使用函数获取。
-
-    所有函数:
-        ref(self, filename) {filename:String} -- 构造器，传入文件名获取所有的数据，必须先行使用。
-        getFrameListData(self) {} -- 获取显式的取样点数据。
-        getFrameData(self) {} -- 获取隐式的取样点数据。
-        getNchannel(self) {} -- 获取声道数。
-        getSampwidth(self) {} -- 获取宽度。
-        getFrameRate(self) {} -- 获取采样率。
-        getRawData(self) {} -- 获取所有的原始字节数据。
-    """
+class rff(object):
+    'Read from file'
 
     def __init__(self, filename):
-        """
-        __init__ rwf的构造器
-        
-        [description]
-        
-        Arguments:
-            filename {[type]} -- [description]
-        """
 
         try:
             file = wave.open(filename, 'rb')
@@ -48,25 +16,42 @@ class rwf(object):
             print('Exception', e)
         else:
             parameters = file.getparams()
-            self.__nchannels, self.__sampwidth, self.__framerate, self.__nframes = parameters[:4]
-            str_data = file.readframes(self.__nframes)
-            self.__wave = np.fromstring(str_data, dtype=np.short)
-            self.__data_size = len(self.__wave)
-    
+            self._nchannels, self._sampwidth, self._framerate, self._nframes = parameters[:4]
+            self._str_data = file.readframes(self._nframes)
+            self._wave_data = np.fromstring(self._str_data, dtype=np.short)
+            self._data_size = len(self._wave_data)
+
     def getFrameListData(self):
-        return self.__wave
-    
+        return self._wave_data
+
     def getFrameData(self):
-        return self.__nframes
-    
+        return self._nframes
+
     def getNchannel(self):
-        return self.__nchannels
+        return self._nchannels
 
     def getSampwidth(self):
-        return self.__sampwidth
+        return self._sampwidth
 
     def getFrameRate(self):
-        return self.__framerate
+        return self._framerate
 
     def getRawData(self):
-        return self.__nchannels, self.__sampwidth, self.__framerate, self.__nframes
+        return self._nchannels, self._sampwidth, self._framerate, self._nframes
+
+
+class wtf(object):
+    'Write to file'
+
+    def __init__(self, filename, data):
+        self._data = data
+        self._write_file(filename)
+
+    def _write_file(self, filename):
+        data = self._data
+        file_data = open(filename, 'wb+')
+        size_data = len(data)
+
+        for i in range(size_data):
+            a = struct.pack('h', int(data[i]))
+            file_data.write(a)

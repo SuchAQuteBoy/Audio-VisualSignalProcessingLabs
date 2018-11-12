@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>一、DPCM算法</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.css" integrity="sha384-D+9gmBxUQogRLqvARvNLmA9hS2x//eK1FhVb9PiU86gmcrBrJAQT8okdJ4LMp2uv" crossorigin="anonymous">
+        <style>
+/*--------------------------------------------------------------------------------------------- * Copyright (c) Microsoft Corporation. All rights reserved. * Licensed under the MIT License. See License.txt in the project root for license information. *--------------------------------------------------------------------------------------------*/ body { font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback"; font-size: 14px; padding: 0 26px; line-height: 22px; word-wrap: break-word; } #code-csp-warning { position: fixed; top: 0; right: 0; color: white; margin: 16px; text-align: center; font-size: 12px; font-family: sans-serif; background-color:#444444; cursor: pointer; padding: 6px; box-shadow: 1px 1px 1px rgba(0,0,0,.25); } #code-csp-warning:hover { text-decoration: none; background-color:#007acc; box-shadow: 2px 2px 2px rgba(0,0,0,.25); } body.scrollBeyondLastLine { margin-bottom: calc(100vh - 22px); } body.showEditorSelection .code-line { position: relative; } body.showEditorSelection .code-active-line:before, body.showEditorSelection .code-line:hover:before { content: ""; display: block; position: absolute; top: 0; left: -12px; height: 100%; } body.showEditorSelection li.code-active-line:before, body.showEditorSelection li.code-line:hover:before { left: -30px; } .vscode-light.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(0, 0, 0, 0.15); } .vscode-light.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(0, 0, 0, 0.40); } .vscode-light.showEditorSelection .code-line .code-line:hover:before { border-left: none; } .vscode-dark.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(255, 255, 255, 0.4); } .vscode-dark.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(255, 255, 255, 0.60); } .vscode-dark.showEditorSelection .code-line .code-line:hover:before { border-left: none; } .vscode-high-contrast.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(255, 160, 0, 0.7); } .vscode-high-contrast.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(255, 160, 0, 1); } .vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before { border-left: none; } img { max-width: 100%; max-height: 100%; } a { text-decoration: none; } a:hover { text-decoration: underline; } a:focus, input:focus, select:focus, textarea:focus { outline: 1px solid -webkit-focus-ring-color; outline-offset: -1px; } hr { border: 0; height: 2px; border-bottom: 2px solid; } h1 { padding-bottom: 0.3em; line-height: 1.2; border-bottom-width: 1px; border-bottom-style: solid; } h1, h2, h3 { font-weight: normal; } h1 code, h2 code, h3 code, h4 code, h5 code, h6 code { font-size: inherit; line-height: auto; } table { border-collapse: collapse; } table > thead > tr > th { text-align: left; border-bottom: 1px solid; } table > thead > tr > th, table > thead > tr > td, table > tbody > tr > th, table > tbody > tr > td { padding: 5px 10px; } table > tbody > tr + tr > td { border-top: 1px solid; } blockquote { margin: 0 7px 0 5px; padding: 0 16px 0 10px; border-left-width: 5px; border-left-style: solid; } code { font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback"; font-size: 14px; line-height: 19px; } body.wordWrap pre { white-space: pre-wrap; } .mac code { font-size: 12px; line-height: 18px; } pre:not(.hljs), pre.hljs code > div { padding: 16px; border-radius: 3px; overflow: auto; } /** Theming */ pre code { color: var(--vscode-editor-foreground); } .vscode-light pre:not(.hljs), .vscode-light code > div { background-color: rgba(220, 220, 220, 0.4); } .vscode-dark pre:not(.hljs), .vscode-dark code > div { background-color: rgba(10, 10, 10, 0.4); } .vscode-high-contrast pre:not(.hljs), .vscode-high-contrast code > div { background-color: rgb(0, 0, 0); } .vscode-high-contrast h1 { border-color: rgb(0, 0, 0); } .vscode-light table > thead > tr > th { border-color: rgba(0, 0, 0, 0.69); } .vscode-dark table > thead > tr > th { border-color: rgba(255, 255, 255, 0.69); } .vscode-light h1, .vscode-light hr, .vscode-light table > tbody > tr + tr > td { border-color: rgba(0, 0, 0, 0.18); } .vscode-dark h1, .vscode-dark hr, .vscode-dark table > tbody > tr + tr > td { border-color: rgba(255, 255, 255, 0.18); } 
+</style>
+<style>
+/* Tomorrow Theme */ /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */ /* Original theme - https://github.com/chriskempson/tomorrow-theme */ /* Tomorrow Comment */ .hljs-comment, .hljs-quote { color: #8e908c; } /* Tomorrow Red */ .hljs-variable, .hljs-template-variable, .hljs-tag, .hljs-name, .hljs-selector-id, .hljs-selector-class, .hljs-regexp, .hljs-deletion { color: #c82829; } /* Tomorrow Orange */ .hljs-number, .hljs-built_in, .hljs-builtin-name, .hljs-literal, .hljs-type, .hljs-params, .hljs-meta, .hljs-link { color: #f5871f; } /* Tomorrow Yellow */ .hljs-attribute { color: #eab700; } /* Tomorrow Green */ .hljs-string, .hljs-symbol, .hljs-bullet, .hljs-addition { color: #718c00; } /* Tomorrow Blue */ .hljs-title, .hljs-section { color: #4271ae; } /* Tomorrow Purple */ .hljs-keyword, .hljs-selector-tag { color: #8959a8; } .hljs { display: block; overflow-x: auto; color: #4d4d4c; padding: 0.5em; } .hljs-emphasis { font-style: italic; } .hljs-strong { font-weight: bold; }
+</style>
+<style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <center>
+<div>
+<img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/HIT1.png" height="80"/>
+</div>
+<div>
+<font size="10">实验报告</font>
+</div>
+<div>
+<table border="0">
+<tr>
+<td align="left">题目</td>
+<td align="left">DPCM编解码实验</td>
+</tr>
+<tr>
+<td align="left">专业</td>
+<td align="left">计算机科学与技术</td>
+</tr>
+<tr>
+<td align="left">学号</td>
+<td align="left">1160300329</td>
+</tr>
+<tr>
+<td align="left">班级</td>
+<td align="left">1603107</td>
+</tr>
+<tr>
+<td align="left">学生</td>
+<td align="left">黄海</td>
+</tr>
+<tr>
+<td align="left">指导教师</td>
+<td align="left">郑铁然</td>
+</tr>
+<tr>
+<td align="left">实验地点</td>
+<td align="left">G709</td>
+</tr>
+<tr>
+<td align="left">实验日期</td>
+<td align="left">10.29</td>
+</tr>
+</table>
+</div>
+<div>
+<font size="5">计算机科学与技术学院</font>
+</div>
+</center>
+<div STYLE="page-break-after: always;"></div>
+<center>
+<h1 id="一dpcm算法">一、DPCM算法</h1>
+</center>
+<h2 id="算法解释">算法解释</h2>
+<p>DPCM算法（以下简称算法）也被称为差值编码技术 是一种通过对语音数据和预测值的差进行保存的压缩方法 关键在于算法中<strong>有几个核心的数据需要确定</strong></p>
+<p>首先对于DPCM编码 我们有以下两个过程</p>
+<center>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab2/20170510210308049.png" alt=""></p>
+</center>
+<p>在编码过程中 存在一个输出向输入提供信号的过程 显然是通过编码并解码后的数据来确定下一个数据的编码输出</p>
+<p>对于语音信号 原始数据为采样点幅值 那么我们有以下算法</p>
+<pre><code class="language-python"><div><span class="hljs-comment"># 以下方法和变量的名称可能不是源码中的名称</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dpcm</span><span class="hljs-params">(self)</span>:</span>
+        data = self._data <span class="hljs-comment"># 原始数据</span>
+        size = len(data)
+        err = [<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(size)] <span class="hljs-comment"># 编码后的数据</span>
+        rebuild = [<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(size)] <span class="hljs-comment"># 解码后的数据</span>
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(size):
+            <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span>: <span class="hljs-comment"># 对于开始的第一个采样点 我们采用了8bit量化</span>
+                err[i] = (data[i] - <span class="hljs-number">128</span>)/<span class="hljs-number">2</span> + <span class="hljs-number">128</span>
+                rebuild[i] = <span class="hljs-number">128</span> + (err[i] - <span class="hljs-number">128</span>) * <span class="hljs-number">2</span>
+            <span class="hljs-keyword">else</span>: <span class="hljs-comment"># 之后的每一个采样点 使用前一个采样点的重建值作为预测</span>
+                err[i] = (data[i] - rebuild[i - <span class="hljs-number">1</span>])/<span class="hljs-number">2</span> + <span class="hljs-number">128</span>
+                rebuild[i] = rebuild[i - <span class="hljs-number">1</span>] + (err[i] - <span class="hljs-number">128</span>) * <span class="hljs-number">2</span>
+
+        self._rebuild = rebuild
+        self._err = err
+</div></code></pre>
+<p>至此 我们结果所想要的所有数据已经拿到 可以进一步计算信噪比了</p>
+<h2 id="snr">SNR</h2>
+<p>SNR 信噪比 用来评判压缩编码之后的文件包含数据的完整程度 通常在计算过程中会使用对数 来使数据有参考性</p>
+<p>我们有公式</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>N</mi><mi>R</mi><mo>=</mo><mn>10</mn><mo>×</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>10</mn></msub><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>n</mi><mo>=</mo><mn>0</mn></mrow><mi>M</mi></munderover><mo>(</mo><mover accent="true"><mi>x</mi><mo stretchy="true">‾</mo></mover><mo>(</mo><mi>n</mi><mo>)</mo><msup><mo>)</mo><mn>2</mn></msup></mrow><mrow><munderover><mo>∑</mo><mrow><mi>n</mi><mo>=</mo><mn>0</mn></mrow><mi>M</mi></munderover><mo>(</mo><mover accent="true"><mi>x</mi><mo stretchy="true">‾</mo></mover><mo>(</mo><mi>n</mi><mo>)</mo><mo>−</mo><mi>x</mi><mo>(</mo><mi>n</mi><mo>)</mo><msup><mo>)</mo><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">SNR = 10 \times log_{10}\frac{\sum_{n=0}^{M}(\overline{x}(n))^2}{\sum_{n=0}^{M}(\overline{x}(n)-x(n))^2}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.841882em;vertical-align:-1.170941em;"></span><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit">o</span><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.670941em;"><span style="top:-2.128769em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.981231em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">n</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.10903em;">M</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord overline"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.63056em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathit">x</span></span></span><span style="top:-3.55056em;"><span class="pstrut" style="height:3em;"></span><span class="overline-line" style="border-bottom-width:0.04em;"></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord mathit">n</span><span class="mclose">)</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.6897100000000003em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.981231em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">n</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.10903em;">M</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord overline"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.63056em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathit">x</span></span></span><span style="top:-3.55056em;"><span class="pstrut" style="height:3em;"></span><span class="overline-line" style="border-bottom-width:0.04em;"></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">n</span><span class="mclose">)</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.170941em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>计算过后可以看到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>N</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">SNR</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mord mathit" style="margin-right:0.00773em;">R</span></span></span></span>越大越好 代表数据丢失越少</p>
+<p>我们给出代码</p>
+<pre><code class="language-python"><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_calculate_snr</span><span class="hljs-params">(self)</span>:</span>
+    rebuild = self._rebuild
+    err = self._err
+    up = np.sum(np.power(err, <span class="hljs-number">2</span>))
+    down = np.sum(np.power(rebuild, <span class="hljs-number">2</span>))
+    self._snr = <span class="hljs-number">10</span> * np.log10(up / down)
+</div></code></pre>
+<center>
+<h1 id="二结果">二、结果</h1>
+</center>
+<p>以下所有均使用python开发</p>
+<ul>
+<li>python 3.7.0 32-bit</li>
+<li>macOS</li>
+</ul>
+<h2 id="提取的文件结果">提取的文件结果</h2>
+<p>文件列表如图</p>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab2/%E7%BB%93%E6%9E%9C1.png" alt=""></p>
+<p>对于1.wav还原的波形如图</p>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab2/%E7%BB%93%E6%9E%9C3.png" alt=""></p>
+<p>对于压缩后的文件如图</p>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab2/%E7%BB%93%E6%9E%9C2.png" alt=""></p>
+<p>信噪比如图</p>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab2/%E7%BB%93%E6%9E%9C4.png" alt=""></p>
+<center>
+<h1 id="三-总结">三、 总结</h1>
+</center>
+<h2 id="请总结本次实验的收获">请总结本次实验的收获</h2>
+<p>本次实验较为全面的了解了使用程序来对语音文件进行处理的全部过程，并且亲手编写算法进行运行。在实验中查询了大量的资料，对于语音处理有了大致的认识。</p>
+<p>对DPCM算法的过程有了详细的认识，加强了自己的动手能力。</p>
+<h2 id="请给出对本次实验内容的建议">请给出对本次实验内容的建议</h2>
+<p>希望能够加入更多的实验内容</p>
+
+    </body>
+    </html>

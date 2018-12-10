@@ -1,10 +1,8 @@
 #! bin/env bash
 
-HCopy -A -D -C ../resources/hcopy.conf -S ../resources/hcopy.scp
+HCopy -A -D -C ../resources/hcopy.conf -S ../resources/hcopy.scp -T 1
 
 for file in ../resources/mfcc/*
 do
-    Hlist $file > $file.txt
+    Hlist -r $file > $file.txt
 done 
-
-python3 main.py

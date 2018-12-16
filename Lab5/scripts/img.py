@@ -23,7 +23,7 @@ class IMGProc(object):
                             img[i, j][k] = 0
             cv.imshow("brightness", img)
             cv.waitKey(0)
-        except IOError as e:
+        except Exception as e:
             print("ERROR: " + str(e))
 
     def contrast(self, filepath, change):
@@ -43,7 +43,7 @@ class IMGProc(object):
                             img[i, j][k] = 0
             cv.imshow("contrast", img)
             cv.waitKey(0)
-        except IOError as e:
+        except Exception as e:
             print("ERROR: " + str(e))
 
     def histogram(self, filepath):
@@ -53,7 +53,7 @@ class IMGProc(object):
             data = data.flatten()
             plt.hist(data, bins=256)
             plt.show()
-        except IOError as e:
+        except Exception as e:
             print("ERROR: " + str(e))
 
     def median(self, filepath):
@@ -69,7 +69,7 @@ class IMGProc(object):
                     img[i, j] = np.median(data, axis=0)
             cv.imshow("median", img)
             cv.waitKey(0)
-        except IOError as e:
+        except Exception as e:
             print("ERROR: " + str(e))
 
     def mean(self, filepath):
@@ -84,7 +84,7 @@ class IMGProc(object):
                     img[i, j] = np.mean(data, axis=0)
             cv.imshow("mean", img)
             cv.waitKey(0)
-        except IOError as e:
+        except Exception as e:
             print("ERROR: " + str(e))
 
 
@@ -105,7 +105,7 @@ class IMGProc(object):
             cv.imshow("reberts_img", img)
             cv.imshow("reberts_new_img", new_img)
             cv.waitKey(0)
-        except IOError as e:
+        except Exception as e:
             print("ERROR: " + str(e))
 
 
@@ -123,10 +123,10 @@ class IMGProc(object):
                     M = g_x + g_y
                     if M >= 300:
                         new_img[i:i + 3:1, j:j + 3:1] = d[i:i + 3:1, j:j + 3:1]
-            cv.imshow("reberts_img", img)
-            cv.imshow("reberts_new_img", new_img)
+            cv.imshow("sobel_img", img)
+            cv.imshow("sobel_new_img", new_img)
             cv.waitKey(0)
-        except IOError as e:
+        except Exception as e:
             print("ERROR: " + str(e))
 
 
@@ -156,7 +156,7 @@ class IMGProc(object):
 
             cv.imshow("mean", img)
             cv.waitKey(0)
-        except IOError as e:
+        except Exception as e:
             print("ERROR: " + str(e))
 
     def stop(self):

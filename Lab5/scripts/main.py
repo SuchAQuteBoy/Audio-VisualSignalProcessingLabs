@@ -15,10 +15,10 @@ class Main(object):
         # img.mean(test_filepath)
         # img.fast_median(test_filepath)
         # img.edge_reberts(test_filepath)
-        # img.edge_sobel(test_filepath)
+        img.edge_sobel(test_filepath)
 
-        img.mean(filepath1)
-        img.median(filepath2)
+        # img.mean(filepath1)
+        # img.median(filepath2)
         img.stop()
 
 

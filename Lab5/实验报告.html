@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>一、图片信息的获取</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.css" integrity="sha384-D+9gmBxUQogRLqvARvNLmA9hS2x//eK1FhVb9PiU86gmcrBrJAQT8okdJ4LMp2uv" crossorigin="anonymous">
+        <style>
+/*--------------------------------------------------------------------------------------------- * Copyright (c) Microsoft Corporation. All rights reserved. * Licensed under the MIT License. See License.txt in the project root for license information. *--------------------------------------------------------------------------------------------*/ body { font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback"; font-size: 14px; padding: 0 26px; line-height: 22px; word-wrap: break-word; } #code-csp-warning { position: fixed; top: 0; right: 0; color: white; margin: 16px; text-align: center; font-size: 12px; font-family: sans-serif; background-color:#444444; cursor: pointer; padding: 6px; box-shadow: 1px 1px 1px rgba(0,0,0,.25); } #code-csp-warning:hover { text-decoration: none; background-color:#007acc; box-shadow: 2px 2px 2px rgba(0,0,0,.25); } body.scrollBeyondLastLine { margin-bottom: calc(100vh - 22px); } body.showEditorSelection .code-line { position: relative; } body.showEditorSelection .code-active-line:before, body.showEditorSelection .code-line:hover:before { content: ""; display: block; position: absolute; top: 0; left: -12px; height: 100%; } body.showEditorSelection li.code-active-line:before, body.showEditorSelection li.code-line:hover:before { left: -30px; } .vscode-light.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(0, 0, 0, 0.15); } .vscode-light.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(0, 0, 0, 0.40); } .vscode-light.showEditorSelection .code-line .code-line:hover:before { border-left: none; } .vscode-dark.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(255, 255, 255, 0.4); } .vscode-dark.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(255, 255, 255, 0.60); } .vscode-dark.showEditorSelection .code-line .code-line:hover:before { border-left: none; } .vscode-high-contrast.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(255, 160, 0, 0.7); } .vscode-high-contrast.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(255, 160, 0, 1); } .vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before { border-left: none; } img { max-width: 100%; max-height: 100%; } a { text-decoration: none; } a:hover { text-decoration: underline; } a:focus, input:focus, select:focus, textarea:focus { outline: 1px solid -webkit-focus-ring-color; outline-offset: -1px; } hr { border: 0; height: 2px; border-bottom: 2px solid; } h1 { padding-bottom: 0.3em; line-height: 1.2; border-bottom-width: 1px; border-bottom-style: solid; } h1, h2, h3 { font-weight: normal; } h1 code, h2 code, h3 code, h4 code, h5 code, h6 code { font-size: inherit; line-height: auto; } table { border-collapse: collapse; } table > thead > tr > th { text-align: left; border-bottom: 1px solid; } table > thead > tr > th, table > thead > tr > td, table > tbody > tr > th, table > tbody > tr > td { padding: 5px 10px; } table > tbody > tr + tr > td { border-top: 1px solid; } blockquote { margin: 0 7px 0 5px; padding: 0 16px 0 10px; border-left-width: 5px; border-left-style: solid; } code { font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback"; font-size: 14px; line-height: 19px; } body.wordWrap pre { white-space: pre-wrap; } .mac code { font-size: 12px; line-height: 18px; } pre:not(.hljs), pre.hljs code > div { padding: 16px; border-radius: 3px; overflow: auto; } /** Theming */ pre code { color: var(--vscode-editor-foreground); } .vscode-light pre { background-color: rgba(220, 220, 220, 0.4); } .vscode-dark pre { background-color: rgba(10, 10, 10, 0.4); } .vscode-high-contrast pre { background-color: rgb(0, 0, 0); } .vscode-high-contrast h1 { border-color: rgb(0, 0, 0); } .vscode-light table > thead > tr > th { border-color: rgba(0, 0, 0, 0.69); } .vscode-dark table > thead > tr > th { border-color: rgba(255, 255, 255, 0.69); } .vscode-light h1, .vscode-light hr, .vscode-light table > tbody > tr + tr > td { border-color: rgba(0, 0, 0, 0.18); } .vscode-dark h1, .vscode-dark hr, .vscode-dark table > tbody > tr + tr > td { border-color: rgba(255, 255, 255, 0.18); } 
+</style>
+<style>
+/* https://raw.githubusercontent.com/isagalaev/highlight.js/master/src/styles/vs2015.css */ /* * Visual Studio 2015 dark style * Author: Nicolas LLOBERA <nllobera@gmail.com> */ .hljs-keyword, .hljs-literal, .hljs-symbol, .hljs-name { color: #569CD6; } .hljs-link { color: #569CD6; text-decoration: underline; } .hljs-built_in, .hljs-type { color: #4EC9B0; } .hljs-number, .hljs-class { color: #B8D7A3; } .hljs-string, .hljs-meta-string { color: #D69D85; } .hljs-regexp, .hljs-template-tag { color: #9A5334; } .hljs-subst, .hljs-function, .hljs-title, .hljs-params, .hljs-formula { color: #DCDCDC; } .hljs-comment, .hljs-quote { color: #57A64A; font-style: italic; } .hljs-doctag { color: #608B4E; } .hljs-meta, .hljs-meta-keyword, .hljs-tag { color: #9B9B9B; } .hljs-variable, .hljs-template-variable { color: #BD63C5; } .hljs-attr, .hljs-attribute, .hljs-builtin-name { color: #9CDCFE; } .hljs-section { color: gold; } .hljs-emphasis { font-style: italic; } .hljs-strong { font-weight: bold; } /*.hljs-code { font-family:'Monospace'; }*/ .hljs-bullet, .hljs-selector-tag, .hljs-selector-id, .hljs-selector-class, .hljs-selector-attr, .hljs-selector-pseudo { color: #D7BA7D; } .hljs-addition { background-color: #144212; display: inline-block; width: 100%; } .hljs-deletion { background-color: #600; display: inline-block; width: 100%; } /* From https://raw.githubusercontent.com/isagalaev/highlight.js/master/src/styles/vs.css */ /* Visual Studio-like style based on original C# coloring by Jason Diamond <jason@diamond.name> */ .vscode-light .hljs-function, .vscode-light .hljs-params { color: inherit; } .vscode-light .hljs-comment, .vscode-light .hljs-quote, .vscode-light .hljs-variable { color: #008000; } .vscode-light .hljs-keyword, .vscode-light .hljs-selector-tag, .vscode-light .hljs-built_in, .vscode-light .hljs-name, .vscode-light .hljs-tag { color: #00f; } .vscode-light .hljs-string, .vscode-light .hljs-title, .vscode-light .hljs-section, .vscode-light .hljs-attribute, .vscode-light .hljs-literal, .vscode-light .hljs-template-tag, .vscode-light .hljs-template-variable, .vscode-light .hljs-type, .vscode-light .hljs-addition { color: #a31515; } .vscode-light .hljs-deletion, .vscode-light .hljs-selector-attr, .vscode-light .hljs-selector-pseudo, .vscode-light .hljs-meta { color: #2b91af; } .vscode-light .hljs-doctag { color: #808080; } .vscode-light .hljs-attr { color: #f00; } .vscode-light .hljs-symbol, .vscode-light .hljs-bullet, .vscode-light .hljs-link { color: #00b0e8; } .vscode-light .hljs-emphasis { font-style: italic; } .vscode-light .hljs-strong { font-weight: bold; }
+</style>
+<style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <center>
+<div>
+<img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/HIT1.png" height="80"/>
+</div>
+<div>
+<font size="10">实验报告</font>
+</div>
+<div>
+<table border="0">
+<tr>
+<td align="left">题目</td>
+<td align="left">图片基本处理</td>
+</tr>
+<tr>
+<td align="left">专业</td>
+<td align="left">计算机科学与技术</td>
+</tr>
+<tr>
+<td align="left">学号</td>
+<td align="left">1160300329</td>
+</tr>
+<tr>
+<td align="left">班级</td>
+<td align="left">1603107</td>
+</tr>
+<tr>
+<td align="left">学生</td>
+<td align="left">黄海</td>
+</tr>
+<tr>
+<td align="left">指导教师</td>
+<td align="left">郑铁然</td>
+</tr>
+<tr>
+<td align="left">实验地点</td>
+<td align="left">G709</td>
+</tr>
+<tr>
+<td align="left">实验日期</td>
+<td align="left">12.10</td>
+</tr>
+</table>
+</div>
+<div>
+<font size="5">计算机科学与技术学院</font>
+</div>
+</center>
+<div STYLE="page-break-after: always;"></div>
+<center>
+<h1 id="%E4%B8%80%E5%9B%BE%E7%89%87%E4%BF%A1%E6%81%AF%E7%9A%84%E8%8E%B7%E5%8F%96">一、图片信息的获取</h1>
+</center>
+<h2 id="11-%E5%9B%BE%E7%89%87%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE%E7%9A%84%E8%8E%B7%E5%8F%96">1.1 图片像素数据的获取</h2>
+<p>对于不同格式的图片 我统一交给了opencv来进行基本的打开和像素数据的获取</p>
+<p>通过opencv打开后 我们能够通过对象获取到图片的基本信息 例如图片的长和高 还有像素数据的深度 并且可以简单的获取到图片的像素数据</p>
+<pre><code class="language-python"><div><span class="hljs-comment"># 亮度调整</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">brightness</span><span class="hljs-params">(self, filepath, change)</span>:</span>
+    <span class="hljs-comment"># try:</span>
+        <span class="hljs-comment"># 图片的打开</span>
+        img = cv.imread(filepath)
+        <span class="hljs-keyword">if</span> img == <span class="hljs-keyword">None</span>:
+            print(<span class="hljs-string">"IOError"</span>)
+            exit(<span class="hljs-number">0</span>)
+        rows, cols = img.shape[:<span class="hljs-number">2</span>]
+        ···
+        <span class="hljs-comment"># 像素调整</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(rows):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(cols):
+                <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>):
+                    img[i, j][k] += change
+        ···
+    <span class="hljs-comment"># except IOError as e:</span>
+    <span class="hljs-comment">#     print("ERROR: " + str(e))</span>
+</div></code></pre>
+<h2 id="12-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%8F%98%E6%8D%A2">1.2 数据结构的变换</h2>
+<p>通过opencv打开的图片 需要对<strong>数据结构</strong>格外注意</p>
+<p>这里的数据结构是标准的类二维数组表示 在调用像素点的数据时需要通过类似于<code>data[i,j]</code>的方式来获取 并且拿到的数据为标准的list 内部存有RGB数据 在调用时需要不断的观察数据结构的变化</p>
+<p>这里需要注意以下几个问题</p>
+<ul>
+<li>
+<p><strong>二维数组的调用</strong><br/>在调用时除了通过<code>i, j</code>循环外 使用<code>[::,::]</code>的结构来获得特定窗口的数据 在进行滤波时效率较高 但是可读性较低</p>
+</li>
+<li>
+<p><strong>图片异常处理</strong><br/>在判断打开时不能通过<code>try IOError</code>来获得异常 必须通过判None 在官方的文档中有以下的注意事项：</p>
+<pre><code>  WARNING:
+
+  Even if the image path is wrong, it won't throw any error, but print img will give you None
+</code></pre>
+</li>
+<li>
+<p><strong>维度变化</strong><br/>数据结构的维度变化频繁 需要使用<code>reshape()</code>来进行调整</p>
+</li>
+</ul>
+<center>
+<h1 id="%E4%BA%8C%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%A4%84%E7%90%86">二、基本的处理</h1>
+</center>
+<h2 id="21-%E4%BA%AE%E5%BA%A6-%E5%AF%B9%E6%AF%94%E5%BA%A6">2.1 亮度 对比度</h2>
+<p>对于图片的亮度和对比度 我们由以下公式给出</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo><mo>=</mo><mi>α</mi><mi>F</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo><mo>+</mo><mi>β</mi></mrow><annotation encoding="application/x-tex">G(i, j) = \alpha F(i,j) + \beta
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathit">G</span><span class="mopen">(</span><span class="mord mathit">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathit" style="margin-right:0.0037em;">α</span><span class="mord mathit" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord mathit">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathit" style="margin-right:0.05278em;">β</span></span></span></span></span></p>
+<p>其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathit">G</span></span></span></span>为结果 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi></mrow><annotation encoding="application/x-tex">F</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathit" style="margin-right:0.13889em;">F</span></span></span></span>为原数据 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi><mi mathvariant="normal">、</mi><mi>β</mi></mrow><annotation encoding="application/x-tex">\alpha、\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathit" style="margin-right:0.0037em;">α</span><span class="mord cjk_fallback">、</span><span class="mord mathit" style="margin-right:0.05278em;">β</span></span></span></span>分别对应对比度和亮度</p>
+<p>所以我们在进行调整时 直接对像素点的值进行调整 同时注意超过上下限的处理</p>
+<pre><code class="language-python"><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">brightness</span><span class="hljs-params">(self, filepath, change)</span>:</span>
+    <span class="hljs-keyword">try</span>:
+        img = cv.imread(filepath)
+        rows, cols = img.shape[:<span class="hljs-number">2</span>]
+        <span class="hljs-keyword">if</span> change &gt;= <span class="hljs-number">255</span> <span class="hljs-keyword">or</span> change &lt; <span class="hljs-number">-255</span>:
+            print(<span class="hljs-string">"illegal!"</span>)
+            exit(<span class="hljs-number">0</span>)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(rows):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(cols):
+                <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>):
+                    img[i, j][k] += change
+                    <span class="hljs-keyword">if</span> img[i, j][k] &gt; <span class="hljs-number">255</span>:
+                        img[i, j][k] = <span class="hljs-number">255</span>
+                    <span class="hljs-keyword">elif</span> img[i, j][k] &lt; <span class="hljs-number">0</span>:
+                        img[i, j][k] = <span class="hljs-number">0</span>
+        cv.imshow(<span class="hljs-string">"brightness"</span>, img)
+        cv.waitKey(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        print(<span class="hljs-string">"ERROR: "</span> + str(e))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">contrast</span><span class="hljs-params">(self, filepath, change)</span>:</span>
+    <span class="hljs-keyword">try</span>:
+        img = cv.imread(filepath)
+        rows, cols = img.shape[:<span class="hljs-number">2</span>]
+        <span class="hljs-keyword">if</span> change &lt; <span class="hljs-number">0</span>:
+            print(<span class="hljs-string">"illegal!"</span>)
+            exit(<span class="hljs-number">0</span>)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(rows):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(cols):
+                <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>):
+                    img[i, j][k] = int(change * img[i, j][k])
+                    <span class="hljs-keyword">if</span> img[i, j][k] &gt; <span class="hljs-number">255</span>:
+                        img[i, j][k] = <span class="hljs-number">255</span>
+                    <span class="hljs-keyword">elif</span> img[i, j][k] &lt; <span class="hljs-number">0</span>:
+                        img[i, j][k] = <span class="hljs-number">0</span>
+        cv.imshow(<span class="hljs-string">"contrast"</span>, img)
+        cv.waitKey(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        print(<span class="hljs-string">"ERROR: "</span> + str(e))
+</div></code></pre>
+<center>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab5/1.png" alt=""></p>
+</center>
+<h2 id="22-%E7%9B%B4%E6%96%B9%E5%9B%BE">2.2 直方图</h2>
+<p>对于图片 取直方图并没有什么难点 主要是要将图片数据更改为一维数组 然后操作</p>
+<pre><code class="language-python"><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">histogram</span><span class="hljs-params">(self, filepath)</span>:</span>
+    <span class="hljs-keyword">try</span>:
+        img = cv.imread(filepath)
+        data = np.asarray(img)
+        data = data.flatten()
+        plt.hist(data, bins=<span class="hljs-number">256</span>)
+        plt.show()
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        print(<span class="hljs-string">"ERROR: "</span> + str(e))
+</div></code></pre>
+<center>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab5/2.png" alt=""></p>
+</center>
+<h2 id="23-%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2">2.3 中值滤波</h2>
+<p>中值滤波 采取的是在一个窗口中 将核心像素的数据更改为窗口的中值 这里我采用的是3*3窗口 然后就是遍历像素 获取结果</p>
+<pre><code class="language-python"><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">median</span><span class="hljs-params">(self, filepath)</span>:</span>
+    <span class="hljs-keyword">try</span>:
+        img = cv.imread(filepath)
+        cv.imshow(<span class="hljs-string">"original_median"</span>, img)
+        rows, cols = img.shape[:<span class="hljs-number">2</span>]
+        d = np.asarray(img)
+        data = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, rows - <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, cols - <span class="hljs-number">1</span>):
+                data = d[i - <span class="hljs-number">1</span>:i + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>, j - <span class="hljs-number">1</span>:j + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>].reshape(<span class="hljs-number">9</span>, <span class="hljs-number">3</span>)
+                img[i, j] = np.median(data, axis=<span class="hljs-number">0</span>)
+        cv.imshow(<span class="hljs-string">"median"</span>, img)
+        cv.waitKey(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        print(<span class="hljs-string">"ERROR: "</span> + str(e))
+</div></code></pre>
+<center>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab5/3.png" alt=""></p>
+</center>
+<h2 id="24-%E5%9D%87%E5%80%BC%E6%BB%A4%E6%B3%A2">2.4 均值滤波</h2>
+<p>均值滤波 采取的是在一个窗口中 将核心像素的数据更改为窗口的均值 这里我采用的是3*3窗口 然后就是遍历像素 获取结果 与中值差别不大</p>
+<pre><code class="language-python"><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mean</span><span class="hljs-params">(self, filepath)</span>:</span>
+    <span class="hljs-keyword">try</span>:
+        img = cv.imread(filepath)
+        cv.imshow(<span class="hljs-string">"original_mean"</span>, img)
+        rows, cols = img.shape[:<span class="hljs-number">2</span>]
+        d = np.asarray(img)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, rows - <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, cols - <span class="hljs-number">1</span>):
+                data = d[i - <span class="hljs-number">1</span>:i + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>, j - <span class="hljs-number">1</span>:j + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>].reshape(<span class="hljs-number">9</span>, <span class="hljs-number">3</span>)
+                img[i, j] = np.mean(data, axis=<span class="hljs-number">0</span>)
+        cv.imshow(<span class="hljs-string">"mean"</span>, img)
+        cv.waitKey(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        print(<span class="hljs-string">"ERROR: "</span> + str(e))
+</div></code></pre>
+<center>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab5/4.png" alt=""></p>
+</center>
+<h2 id="25-%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B">2.5 边缘检测</h2>
+<h3 id="reberts%E7%AE%97%E5%AD%90"><strong>reberts算子</strong></h3>
+<p>reberts算子采用了四像素的窗口 来进行梯度计算</p>
+<center>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab5/001.png" alt=""></p>
+</center>
+<p>我们定义两个方向的梯度</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>g</mi><mi>x</mi></msub><mo>=</mo><msub><mi>z</mi><mn>9</mn></msub><mo>−</mo><msub><mi>z</mi><mn>5</mn></msub><mspace linebreak="newline"></mspace><msub><mi>g</mi><mi>y</mi></msub><mo>=</mo><msub><mi>z</mi><mn>8</mn></msub><mo>−</mo><msub><mi>z</mi><mn>6</mn></msub><mspace linebreak="newline"></mspace><mi>M</mi><mo>=</mo><mi mathvariant="normal">∣</mi><msub><mi>g</mi><mi>x</mi></msub><mi mathvariant="normal">∣</mi><mo>+</mo><mi mathvariant="normal">∣</mi><msub><mi>g</mi><mi>y</mi></msub><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">g_x = z_9 - z_5 \\
+g_y = z_8 - z_6 \\
+M = |g_x| + |g_y|
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathit" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord">∣</span></span></span></span></span></p>
+<p>M就是我们判断的依据 通过梯度的大小来判断边缘</p>
+<pre><code class="language-python"><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">edge_reberts</span><span class="hljs-params">(self, filepath)</span>:</span>
+    <span class="hljs-keyword">try</span>:
+        img = cv.imread(filepath, <span class="hljs-number">0</span>)
+        rows, cols = img.shape[:<span class="hljs-number">2</span>]
+        new_img = np.zeros((rows, cols), np.uint8)
+        d = np.asarray(img)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(rows - <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(cols - <span class="hljs-number">1</span>):
+                data = d[i:i + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>, j:j + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>]
+                g_x = abs(int(data[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>]) - int(data[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>]))
+                g_y = abs(int(data[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>]) - int(data[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]))
+                M = g_x + g_y
+                <span class="hljs-keyword">if</span> M &gt;= <span class="hljs-number">100</span>:
+                    new_img[i:i + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>, j:j + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>] = d[i:i + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>, j:j + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>]
+        cv.imshow(<span class="hljs-string">"reberts_img"</span>, img)
+        cv.imshow(<span class="hljs-string">"reberts_new_img"</span>, new_img)
+        cv.waitKey(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        print(<span class="hljs-string">"ERROR: "</span> + str(e))
+</div></code></pre>
+<center>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab5/5.png" alt=""></p>
+</center>
+<h3 id="sobel%E7%AE%97%E5%AD%90"><strong>sobel</strong>算子</h3>
+<p>sobel算子取用了九像素窗口 同样的是上边的示意图 只不过梯度发生了变化</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>g</mi><mi>x</mi></msub><mo>=</mo><mo>(</mo><msub><mi>z</mi><mn>9</mn></msub><mo>+</mo><mn>2</mn><msub><mi>z</mi><mn>8</mn></msub><mo>+</mo><msub><mi>z</mi><mn>7</mn></msub><mo>)</mo><mo>−</mo><mo>(</mo><msub><mi>z</mi><mn>3</mn></msub><mo>+</mo><mn>2</mn><msub><mi>z</mi><mn>2</mn></msub><mo>+</mo><msub><mi>z</mi><mn>1</mn></msub><mo>)</mo><mspace linebreak="newline"></mspace><msub><mi>g</mi><mi>y</mi></msub><mo>=</mo><mo>(</mo><msub><mi>z</mi><mn>3</mn></msub><mo>+</mo><mn>2</mn><msub><mi>z</mi><mn>6</mn></msub><mo>+</mo><msub><mi>z</mi><mn>9</mn></msub><mo>)</mo><mo>−</mo><mo>(</mo><msub><mi>z</mi><mn>1</mn></msub><mo>+</mo><mn>2</mn><msub><mi>z</mi><mn>4</mn></msub><mo>+</mo><msub><mi>z</mi><mn>7</mn></msub><mo>)</mo><mspace linebreak="newline"></mspace><mi>M</mi><mo>=</mo><mi mathvariant="normal">∣</mi><msub><mi>g</mi><mi>x</mi></msub><mi mathvariant="normal">∣</mi><mo>+</mo><mi mathvariant="normal">∣</mi><msub><mi>g</mi><mi>y</mi></msub><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">g_x = (z_9 + 2z_8 + z_7)-(z_3 + 2z_2 + z_1) \\
+g_y = (z_3 + 2z_6 + z_9) - (z_1 + 2z_4 + z_7) \\
+M = |g_x| + |g_y|
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">7</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">7</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathit" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord">∣</span></span></span></span></span></p>
+<pre><code class="language-python"><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">edge_sobel</span><span class="hljs-params">(self, filepath)</span>:</span>
+    <span class="hljs-keyword">try</span>:
+        img = cv.imread(filepath, <span class="hljs-number">0</span>)
+        rows, cols = img.shape[:<span class="hljs-number">2</span>]
+        new_img = np.zeros((rows, cols), np.uint8)
+        d = np.asarray(img)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(rows - <span class="hljs-number">2</span>):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(cols - <span class="hljs-number">2</span>):
+                data = d[i:i + <span class="hljs-number">3</span>:<span class="hljs-number">1</span>, j:j + <span class="hljs-number">3</span>:<span class="hljs-number">1</span>]
+                g_x = abs((int(data[<span class="hljs-number">2</span>, <span class="hljs-number">0</span>]) + <span class="hljs-number">2</span> * int(data[<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]) + int(data[<span class="hljs-number">2</span>, <span class="hljs-number">2</span>)) - (int(data[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>]) + <span class="hljs-number">2</span> * int(data[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]) + int(data[<span class="hljs-number">0</span>, <span class="hljs-number">2</span>])))
+                g_y = abs((int(data[<span class="hljs-number">0</span>, <span class="hljs-number">2</span>]) + <span class="hljs-number">2</span> * int(data[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]) + int(data[<span class="hljs-number">2</span>, <span class="hljs-number">2</span>)) - (int(data[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>]) + <span class="hljs-number">2</span> * int(data[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>]) + int(data[<span class="hljs-number">2</span>, <span class="hljs-number">0</span>])))
+                M = g_x + g_y
+                <span class="hljs-keyword">if</span> M &gt;= <span class="hljs-number">300</span>:
+                    new_img[i:i + <span class="hljs-number">3</span>:<span class="hljs-number">1</span>, j:j + <span class="hljs-number">3</span>:<span class="hljs-number">1</span>] = d[i:i + <span class="hljs-number">3</span>:<span class="hljs-number">1</span>, j:j + <span class="hljs-number">3</span>:<span class="hljs-number">1</span>]
+        cv.imshow(<span class="hljs-string">"reberts_img"</span>, img)
+        cv.imshow(<span class="hljs-string">"reberts_new_img"</span>, new_img)
+        cv.waitKey(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        print(<span class="hljs-string">"ERROR: "</span> + str(e))
+</div></code></pre>
+<center>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab5/6.png" alt=""></p>
+</center>
+<h2 id="26-%E5%BF%AB%E9%80%9F%E4%B8%AD%E5%80%BC">2.6 快速中值</h2>
+<p>中值滤波的问题主要是性能 由于每个像素基本都需要遍历 造成了时间上的浪费 而快速中值的表现更加稳定</p>
+<p>显然最初的算法的时间复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathit" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 下边给出的算法 时间复杂度提高到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathit" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span></p>
+<p>提高效率 集中在如何更加高效率的使用加载的数据 首先是初等的优化</p>
+<center>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab5/002.png" alt=""></p>
+</center>
+<p>可见 是对每次处理的列进行了保存优化 但是 这只是在行上的移动 对于列方向的移动 也有优化的空间</p>
+<center>
+<p><img src="https://raw.githubusercontent.com/SuchAQuteBoy/Pictures/master/Audio-VisualSignalProcessing/Lab5/003.png" alt=""></p>
+</center>
+<p>这里将操作分成了两部 首先是将变化的列中右下角的像素进行了更改 最大程度保存原来的数据 然后便是标准的列操作 这里的复杂度 由于只进行了一次遍历 所以达到了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathit" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span></p>
+<pre><code class="language-python"><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fast_median</span><span class="hljs-params">(self, filepath)</span>:</span>
+    <span class="hljs-keyword">try</span>:
+        img = cv.imread(filepath)
+        rows, cols = img.shape[:<span class="hljs-number">2</span>]
+        d = np.asarray(img)
+        data = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, rows - <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, cols - <span class="hljs-number">1</span>):
+                <span class="hljs-keyword">if</span> j == <span class="hljs-number">1</span>:
+                    data = d[i - <span class="hljs-number">1</span>:i + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>, j - <span class="hljs-number">1</span>:j + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>]
+                <span class="hljs-keyword">elif</span> i == <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> j != cols - <span class="hljs-number">2</span>:
+                    data[:, <span class="hljs-number">0</span>] = data[:, <span class="hljs-number">1</span>]
+                    data[:, <span class="hljs-number">1</span>] = data[:, <span class="hljs-number">2</span>]
+                    data[:, <span class="hljs-number">2</span>] = d[i - <span class="hljs-number">1</span>:i + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>, j + <span class="hljs-number">1</span>]
+                <span class="hljs-keyword">elif</span> i != <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> j != cols - <span class="hljs-number">2</span>:
+                    data[<span class="hljs-number">0</span>, <span class="hljs-number">2</span>] = data[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]
+                    data[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>] = data[<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]
+                    data[<span class="hljs-number">2</span>, <span class="hljs-number">2</span>] = d[i + <span class="hljs-number">1</span>, j + <span class="hljs-number">1</span>]
+                    data[:, <span class="hljs-number">0</span>] = data[:, <span class="hljs-number">1</span>]
+                    data[:, <span class="hljs-number">1</span>] = data[:, <span class="hljs-number">2</span>]
+                    data[:, <span class="hljs-number">2</span>] = d[i - <span class="hljs-number">1</span>:i + <span class="hljs-number">2</span>:<span class="hljs-number">1</span>, j + <span class="hljs-number">1</span>]
+                data0 = data.reshape(<span class="hljs-number">9</span>, <span class="hljs-number">3</span>)
+                img[i, j] = np.mean(data0, axis=<span class="hljs-number">0</span>)
+        cv.imshow(<span class="hljs-string">"mean"</span>, img)
+        cv.waitKey(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        print(<span class="hljs-string">"ERROR: "</span> + str(e))
+</div></code></pre>
+</center>
+<h1 id="%E4%B8%89-%E6%80%BB%E7%BB%93">三、 总结</h1>
+</center>
+<h2 id="31-%E8%AF%B7%E6%80%BB%E7%BB%93%E6%9C%AC%E6%AC%A1%E5%AE%9E%E9%AA%8C%E7%9A%84%E6%94%B6%E8%8E%B7">3.1 请总结本次实验的收获</h2>
+<p>这次实验难度不大 都是在已有的基础上进行操作 更多的是对算法实现细节的理解 以及商业用包中对相关算法的替代以及优化 更过的了解了图像处理的瓶颈和优化步骤</p>
+<h2 id="42-%E8%AF%B7%E7%BB%99%E5%87%BA%E5%AF%B9%E6%9C%AC%E6%AC%A1%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9%E7%9A%84%E5%BB%BA%E8%AE%AE">4.2 请给出对本次实验内容的建议</h2>
+<p>希望能够将CUDA内容去除 然后将快速中值变为必做内容</p>
+
+    </body>
+    </html>

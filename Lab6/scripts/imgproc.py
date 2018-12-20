@@ -15,7 +15,7 @@ class IMGProc(object):
             # cv.bilateralFilter(n, 5, 150, 150)
             # cv.imshow("right", n)
             size_x, size_y = img.shape[:2]
-            or_data = np.asarray(img)
+            or_data = np.array(img)
             center = int(d / 2)
             for i in range(center, size_x - center):
                 for j in range(center, size_y - center):

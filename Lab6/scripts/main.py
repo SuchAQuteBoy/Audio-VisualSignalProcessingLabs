@@ -6,7 +6,7 @@ class Main(object):
     def main(self):
         filepath = "resources/test.jpg"
         proc = IMGProc()
-        proc.BilateralFilters(filepath, 3)
+        proc.BilateralFilters(filepath, 5)
 
 if __name__ == "__main__":
     Main().main()

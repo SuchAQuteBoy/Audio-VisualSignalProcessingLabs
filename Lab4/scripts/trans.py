@@ -10,7 +10,8 @@ class Trans(object):
         self.shape_y = np.shape(data)[1]
 
     def yiq(self):
-        mat = np.array([0.114, 0.587, 0.299, 0, -0.321, -0.275, 0.596, 0, 0.311, -0.523, 0.212, 0, 0, 0, 0, 1]).reshape(4, 4).T
+        mat = np.array([0.114, 0.587, 0.299, 0, -0.321, -0.275, 0.596, 0, 0.311,
+         -0.523, 0.212, 0, 0, 0, 0, 1]).reshape(4, 4).T
         data = np.dot(self.data, mat)
         return data
 
@@ -20,7 +21,8 @@ class Trans(object):
             B = data[i][0]
             G = data[i][1]
             R = data[i][2]
-            theta = np.arccos(((R - G) + (R - B)) / (2 * np.sqrt((R - G) * (R - G) + (R - B) * (G - B))))
+            theta = np.arccos(((R - G) + (R - B)) /
+             (2 * np.sqrt((R - G) * (R - G) + (R - B) * (G - B))))
             H = theta if G >= B else 2.0 * np.pi - theta
             S = 1.0 - (3.0 * np.min((R, G, B)) / (R + B + G))
             I = (R + B + G) / 3.0
@@ -30,7 +32,8 @@ class Trans(object):
         return data
                 
     def ycbcr(self):
-        mat = np.mat([[0.098, 0.564, 0.257, 0], [0.439, -0.291, -0.148, 0], [-0.071, -0.368, 0.439, 0], [0, 0, 0, 1]]).T
+        mat = np.mat([[0.098, 0.564, 0.257, 0], [0.439, -0.291, -0.148, 0],
+        [-0.071, -0.368, 0.439, 0], [0, 0, 0, 1]]).T
         print(np.shape(mat))
         data = np.dot(self.data, mat)
         for i in range(self.shape_x):

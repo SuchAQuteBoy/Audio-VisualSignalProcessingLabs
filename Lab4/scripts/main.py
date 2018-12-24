@@ -10,16 +10,18 @@ class Main(object):
         parser = argparse.ArgumentParser()
         parser.add_argument("filename")
         args = parser.parse_args()
-        d = BmpReader(args.filename)
-        data = d.return_data()
-        s = Trans(data)
-        data1 = s.hsi()
-        data2 = s.yiq()
-        data3 = s.ycbcr()
-        
-        d.rebuild(data1, ".hsi")
-        d.rebuild(data2, ".yiq")
-        d.rebuild(data3, ".ycbcr")
+        try:
+            d = BmpReader(args.filename)
+            data = d.return_data()
+            s = Trans(data)
+            data1 = s.hsi()
+            data2 = s.yiq()
+            data3 = s.ycbcr()
+            d.rebuild(data1, ".hsi")
+            d.rebuild(data2, ".yiq")
+            d.rebuild(data3, ".ycbcr")
+        except Exception as e:
+            print("ERROR:\n" + str(e))
 
 
 if __name__ == "__main__":

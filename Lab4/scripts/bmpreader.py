@@ -66,17 +66,15 @@ class BmpReader(object):
         file.write(self.biYPelsPerMeter)
         file.write(self.biClrUsed)
         file.write(self.biClrImportant)
-        
+        data = np.array(data)
         for i in range(self.size):
-            for j in range(self.count):
-                a = data[i][j]
-                # print(i, j)
-                # print(a)
-                file.write(struct.pack("<f", float(a)))
+            a = np.array(data[i])
+            # print(i, j)
+            # print(a)
+            file.write(struct.pack("<i", int(a[0]) if not np.isnan(a[0]) else 0))
+            file.write(struct.pack("<i", int(a[1]) if not np.isnan(a[1]) else 0))
+            file.write(struct.pack("<i", int(a[2]) if not np.isnan(a[2]) else 0))
+            file.write(struct.pack("<i", int(a[3]) if not np.isnan(a[3]) else 0))
+            
         file.close()
-        
-        
-
-
-        
         

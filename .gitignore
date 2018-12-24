@@ -3,5 +3,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
-.vscode
+.vscode/
 *.zip
+test.bmp.hsi
+test.bmp.yiq
+test.bmp.ycbcr
